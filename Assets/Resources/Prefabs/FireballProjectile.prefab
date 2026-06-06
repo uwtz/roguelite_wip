@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3387638669898195436}
   - component: {fileID: 6714297385242186948}
   - component: {fileID: 1742411008832094522}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FireballProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,9 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be9db3e09b9d5435aa45f865b3799080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  spd: 2000
-  maxLifeTime: 3
+  spd: 1000
+  maxLifeTime: 5
   destroyFlag: 0
+  projectilePrefab: {fileID: 0}
 --- !u!50 &6714297385242186948
 Rigidbody2D:
   serializedVersion: 5
@@ -72,7 +73,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -194,7 +195,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 100
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 0.8113208, g: 0.26406196, b: 0.33528754, a: 1}
   m_FlipX: 0
   m_FlipY: 0

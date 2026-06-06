@@ -1,9 +1,10 @@
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 public abstract class Gem
 {
     public abstract string Name { get; }
-    public virtual int MaxChildren { get; set; } = 0;
+    public int maxChildren = 0;
     public abstract void Execute(WeaponContext ctx);
 }
 
@@ -14,7 +15,7 @@ public abstract class SpellGem : Gem
 
 public abstract class ProjectileGem : SpellGem
 {
-    public abstract GameObject ProjectilePrefab { get; }
+    public GameObject projectilePrefab;
 }
 
 public abstract class ModifierGem : Gem
@@ -25,9 +26,9 @@ public abstract class ModifierGem : Gem
 public class Root : Gem
 {
     public override string Name => "Root";
-    public Root(int MaxChildren = 1)
+    public Root(int maxChildren = 1)
     {
-        this.MaxChildren = MaxChildren;
+        this.maxChildren = maxChildren;
     }
     public override void Execute(WeaponContext ctx)
     {
@@ -38,17 +39,21 @@ public class Root : Gem
 public class Fireball : ProjectileGem
 {
     public override string Name => "Fireball";
-    public override GameObject ProjectilePrefab => Resources.Load<GameObject>("Prefabs/FireballProjectile");
+    //public override GameObject projectilePrefab => Resources.Load<GameObject>("Prefabs/FireballProjectile");
     //public override int MaxChildren { get; set; }
-    public Fireball(int MaxChildren = 0)
+    public Fireball(GameObject projectilePrefab, int maxChildren = 0)
     {
-        this.MaxChildren = MaxChildren;
+        this.maxChildren = maxChildren;
+        this.projectilePrefab = projectilePrefab;
     }
     public override void Execute(WeaponContext ctx)
     {
-        GameObject projObject = GameObject.Instantiate(ProjectilePrefab, ctx.origin, Quaternion.identity);
+        // store prefab in ctx for support gems to use eg. volley
+        ctx.projectilePrefab = projectilePrefab;
+
+        GameObject projObject = GameObject.Instantiate(projectilePrefab);
         Projectile proj = projObject.GetComponent<Projectile>();
-        proj.Initialize(ctx);
+        proj.Initialize(ctx, projectilePrefab);
     }
 }
 
@@ -57,9 +62,9 @@ public class Pierce : ModifierGem
     public override string Name => "Pierce";
     //public override int MaxChildren { get; set; }
     //public override Modifier modifier => new PierceModifier();
-    public Pierce(int MaxChildren = 1)
+    public Pierce(int maxChildren = 1)
     {
-        this.MaxChildren = MaxChildren;
+        this.maxChildren = maxChildren;
     }
     public override void Execute(WeaponContext ctx)
     {
@@ -70,9 +75,9 @@ public class Pierce : ModifierGem
 public class Volley : ModifierGem
 {
     public override string Name => "Volley";
-    public Volley(int MaxChildren = 1)
+    public Volley(int maxChildren = 1)
     {
-        this.MaxChildren = MaxChildren;
+        this.maxChildren = maxChildren;
     }
     public override void Execute(WeaponContext ctx)
     {

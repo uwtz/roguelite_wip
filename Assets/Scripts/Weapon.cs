@@ -10,7 +10,7 @@ public class Weapon : MonoBehaviour
     WeaponTree weaponTree;
     public WeaponTreeData weaponTreeData;
 
-    void Awake()
+    void Start()
     {
         // create weapon tree, use weaponTreeData if it exist
         // assume root node to be at index 0
@@ -57,12 +57,12 @@ public class Weapon : MonoBehaviour
         switch(gemData.name)
         {
             case "Root" : gem = new Root(); break;
-            case "Fireball": gem = new Fireball(); break;
+            case "Fireball": gem = GemHelper.Instance.CreateFireball(); break;
             case "Volley": gem = new Volley(); break;
             case "Pierce": gem = new Pierce(); break;
             default: Debug.Log($"Failed to create gem: {name}"); break;
         }
-        gem.MaxChildren = gemData.maxChildren;
+        gem.maxChildren = gemData.maxChildren;
         return gem;
     }
 
@@ -107,6 +107,7 @@ public class WeaponContext
     public Vector2 origin;
     public Vector2 dir;
     public List<Modifier> modifiers;
+    public GameObject projectilePrefab; // not used atm pretty sure
     public WeaponContext()
     {
         origin = new Vector2(0,0);
@@ -123,6 +124,7 @@ public class WeaponContext
     {
         this.origin = ctx.origin;
         this.dir = ctx.dir;
-        this.modifiers = ctx.modifiers;
+        this.modifiers = new List<Modifier>(ctx.modifiers); // copy modifer list so copies of ctx dont ref the same list
+        this.projectilePrefab = ctx.projectilePrefab;
     }
 }

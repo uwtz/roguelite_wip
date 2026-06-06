@@ -20,7 +20,7 @@ public class PlayerWeapons : MonoBehaviour
         weaponActions[1] = InputSystem.actions.FindAction("UseWeapon2");
         weaponActions[2] = InputSystem.actions.FindAction("UseWeapon3");
 
-        mouseAction  = InputSystem.actions.FindAction("Mouse");
+        mouseAction = InputSystem.actions.FindAction("Mouse");
     }
 
     void OnEnable()

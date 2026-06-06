@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Projectile : MonoBehaviour
 {
@@ -7,12 +10,17 @@ public class Projectile : MonoBehaviour
     int dmg;
     [SerializeField] float maxLifeTime;
     float lifeTime;
-    Vector2 dir = new Vector2(0,0); // if not set, proj remain stationary
+    public Vector2 dir = new Vector2(0,0); // if not set, proj remain stationary
     Rigidbody2D rb;
     [HideInInspector] public bool destroyFlag; // if true, mark gameobject to destroy
+    [HideInInspector] public GameObject projectilePrefab; // set when initialized, used and passed on when copying self
+    WeaponContext ctx;
 
-    public void Initialize(WeaponContext ctx)
+    public void Initialize(WeaponContext ctx, GameObject projectilePrefab)
     {
+        this.projectilePrefab = projectilePrefab;
+        this.ctx = ctx;
+        transform.position = ctx.origin;
         dir = ctx.dir; // TODO: might need to do ctx.dir.normalized;
         AddModifier(ctx);
     }
@@ -24,12 +32,37 @@ public class Projectile : MonoBehaviour
         rb.linearVelocity = spd * Time.deltaTime * dir;
     }
 
+    // create a copy of this projectile 
+    // able to set the position and rotation using param
+    public void CopyProjectile(Vector2 positionOffset = default, float directionOffset = 0f, Modifier modifierToRemove = null)
+    {
+        WeaponContext ctxCopy = new WeaponContext(ctx);
+        if (modifierToRemove != null)
+            ctxCopy.modifiers.Remove(modifierToRemove);
+
+        ctxCopy.origin = (Vector2)transform.position + positionOffset;
+        ctxCopy.dir = Quaternion.Euler(0, 0, directionOffset) * dir;
+
+        GameObject projObjectCopy = GameObject.Instantiate(projectilePrefab);
+        Projectile projCopy = projObjectCopy.GetComponent<Projectile>();
+        projCopy.Initialize(ctxCopy, projectilePrefab);
+        
+        //projObjectCopy.transform.position += new Vector3(positionOffset.x, positionOffset.y);
+        //AddDirectionOffset(directionOffset);
+
+        // TODO: set rotation using dir in update
+    }
+
+    public void AddDirectionOffset(float offset)
+    {
+        dir = Quaternion.Euler(0, 0, offset) * dir;
+    }
 
     // TODO: collision
     void OnCollisionEnter2D(Collision2D collision)
     {
         // TODO: dmg, call onhit(), check for pierce/chain, check for wall bounce
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
 
@@ -44,6 +77,8 @@ public class Projectile : MonoBehaviour
     // call the respective 'On' method throughout the projectile's lifetime.
     public void AddModifier(Modifier m)
     {
+        //Debug.Log($"adding {m.GetType().Name}");
+        
         // cast once on add, not on every event
         if (m is IOnFire   f) onFireListeners.Add(f);
         if (m is IOnHit    h) onHitListeners.Add(h);
@@ -58,7 +93,12 @@ public class Projectile : MonoBehaviour
 
     void OnFire()
     {
-        foreach(IOnFire m in onFireListeners) m.OnFire(this);
+        //Debug.Log(onFireListeners.Count);
+        foreach(IOnFire m in onFireListeners)
+        {
+            //Debug.Log(m.GetType().Name);
+            m.OnFire(this);
+        }
     }
     void OnTick()
     {
@@ -85,11 +125,11 @@ public class Projectile : MonoBehaviour
 
     void Awake()
     {
-        OnFire();
     }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        OnFire();
     }
     void Update()
     {

@@ -30,13 +30,28 @@ class PierceModifier : Modifier, IOnHit
 class VolleyModifier : Modifier, IOnFire
 {
     int count;
-    public VolleyModifier(int count = 3)
+    public VolleyModifier(int count = 5)
     {
         this.count = count;
     }
     public void OnFire(Projectile proj)
     {
-        // TODO: instantiate copies of proj (need ref to prefab, maybe remove volley modifier before copying)
-        //       and set dir to +- degrees. interval within range [-70, 70]
+        // spawn copies of the proj in a fan shape
+        // count is # of additional projs
+
+        if (count <= 0) return;
+
+        float spread = 90f;
+        float directionOffset = spread/2;
+        float interval = spread / count;
+
+        // set this proj to left most angle, then create copie of proj at increments to the right
+        proj.AddDirectionOffset(directionOffset);
+            Debug.Log(directionOffset);
+
+        for (int i=0; i<count; i++)
+        {
+            proj.CopyProjectile(Vector2.zero, -interval * (i+1), this);
+        }
     }
 }

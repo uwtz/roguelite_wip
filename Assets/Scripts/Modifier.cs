@@ -1,8 +1,15 @@
 using UnityEngine;
 
-public class Modifier
+public abstract class Modifier
 {
-    
+    public bool enabled = true;
+    public virtual Modifier Clone(bool enabled = true)
+    {
+        Modifier m = CreateClone();
+        m.enabled = enabled;
+        return m;
+    }
+    public abstract Modifier CreateClone();
 }
 
 class SpeedModifier
@@ -17,9 +24,14 @@ class PierceModifier : Modifier, IOnHit
     {
         this.count = count;
     }
-    public void OnHit(Projectile proj, GameObject target)
+    public override Modifier CreateClone()
     {
-        if(proj.destroyFlag && count>0)
+        return new PierceModifier(count);
+    }
+    public void OnHit(Projectile proj, GameObject hitObject)
+    {
+        if(hitObject.layer == LayerMask.NameToLayer("Enemy") &&
+           proj.destroyFlag && count>0)
         {
             proj.destroyFlag = false;
             count--;
@@ -34,6 +46,10 @@ class VolleyModifier : Modifier, IOnFire
     {
         this.count = count;
     }
+    public override Modifier CreateClone()
+    {
+        return new VolleyModifier(count);
+    }
     public void OnFire(Projectile proj)
     {
         // spawn copies of the proj in a fan shape
@@ -47,7 +63,6 @@ class VolleyModifier : Modifier, IOnFire
 
         // set this proj to left most angle, then create copie of proj at increments to the right
         proj.AddDirectionOffset(directionOffset);
-            Debug.Log(directionOffset);
 
         for (int i=0; i<count; i++)
         {

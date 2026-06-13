@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Weapon : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class Weapon : MonoBehaviour
     WeaponTree weaponTree;
     public WeaponTreeData weaponTreeData;
 
+
+    //Ryker was here :3
     void Start()
     {
         // create weapon tree, use weaponTreeData if it exist
@@ -70,7 +74,7 @@ public class Weapon : MonoBehaviour
     public void Cast(Vector2 origin, Vector2 dir)
     {
         Debug.Log($"Casting {gameObject.name}\nOrigin: {origin}, Direction: {dir}");
-
+        //Debug.Log(weaponTree.ToString());
         WeaponContext ctx = new WeaponContext(origin, dir);
         if (weaponTree.root != null)
         {
@@ -124,7 +128,8 @@ public class WeaponContext
     {
         this.origin = ctx.origin;
         this.dir = ctx.dir;
-        this.modifiers = new List<Modifier>(ctx.modifiers); // copy modifer list so copies of ctx dont ref the same list
+        this.modifiers = ctx.modifiers.ConvertAll(m => m.Clone());
+        //this.modifiers = new List<Modifier>(ctx.modifiers); // copy modifer list so copies of ctx dont ref the same list
         this.projectilePrefab = ctx.projectilePrefab;
     }
 }

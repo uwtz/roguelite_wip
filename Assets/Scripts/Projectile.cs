@@ -1,16 +1,13 @@
 using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Projectile : MonoBehaviour
 {
     [SerializeField] int spd;
-    int dmg;
+    [SerializeField] int dmg;
     [SerializeField] float maxLifeTime;
     float lifeTime;
-    public Vector2 dir = new Vector2(0,0); // if not set, proj remain stationary
+    Vector2 dir = new Vector2(0,0); // if not set, proj remain stationary
     Rigidbody2D rb;
     [HideInInspector] public bool destroyFlag; // if true, mark gameobject to destroy
     [HideInInspector] public GameObject projectilePrefab; // set when initialized, used and passed on when copying self
@@ -33,13 +30,23 @@ public class Projectile : MonoBehaviour
     }
 
     // create a copy of this projectile 
-    // able to set the position and rotation using param
-    public void CopyProjectile(Vector2 positionOffset = default, float directionOffset = 0f, Modifier modifierToRemove = null)
+    // able to set position and rotation offset using param
+    public void CopyProjectile(Vector2 positionOffset = default, float directionOffset = 0f, Modifier modifierToDisable = null)
     {
         WeaponContext ctxCopy = new WeaponContext(ctx);
-        if (modifierToRemove != null)
-            ctxCopy.modifiers.Remove(modifierToRemove);
 
+        // if asked, disable the corresponding cloned modifier so, for example,
+        // a Volley modifier doesn't spawn copies from the cloned projectile
+        if (modifierToDisable != null)
+        {
+            int idx = ctx.modifiers.IndexOf(modifierToDisable);
+            if (idx >= 0 && idx < ctxCopy.modifiers.Count)
+            {
+                ctxCopy.modifiers[idx].enabled = false;
+            }
+        }
+
+        // use this projectile's current position and direction as the inital weapon context for the copied projectile
         ctxCopy.origin = (Vector2)transform.position + positionOffset;
         ctxCopy.dir = Quaternion.Euler(0, 0, directionOffset) * dir;
 
@@ -59,10 +66,10 @@ public class Projectile : MonoBehaviour
     }
 
     // TODO: collision
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D col)
     {
-        // TODO: dmg, call onhit(), check for pierce/chain, check for wall bounce
-        //Destroy(gameObject);
+        // note that projectile's rigidbody and collider should already be set to ignore player and projectile layer
+        OnHit(col.gameObject);
     }
 
 
@@ -80,6 +87,9 @@ public class Projectile : MonoBehaviour
         //Debug.Log($"adding {m.GetType().Name}");
         
         // cast once on add, not on every event
+        // ??? huh
+
+        if (!m.enabled) return;
         if (m is IOnFire   f) onFireListeners.Add(f);
         if (m is IOnHit    h) onHitListeners.Add(h);
         if (m is IOnTick   t) onTickListeners.Add(t);
@@ -100,20 +110,29 @@ public class Projectile : MonoBehaviour
             m.OnFire(this);
         }
     }
+
     void OnTick()
     {
         foreach(IOnTick m in onTickListeners) m.OnTick(this);
     }
-    void OnHit()
+
+    void OnHit(GameObject hitObject)
     {
         // on hit, determine if there exist modifiers that allow proj to live
         // eg. pierce, chain
         // modifiers closer to root gets 'spent' first, marking the destroyFlag false
 
+        if (hitObject.TryGetComponent<EnemyHealth>(out EnemyHealth enemyHealth))
+        {
+            enemyHealth.TakeDamage(dmg);
+        }
+
         destroyFlag = true;
-        foreach(IOnHit m in onHitListeners) m.OnHit(this, null);
+        foreach(IOnHit m in onHitListeners)
+            m.OnHit(this, hitObject);
         if(destroyFlag) Destroy(gameObject);
     }
+
     // TODO: call when destroyFlag is true. need to make sure is only called once
     // maybe lateupdate, after onhit is checked
     // refresh lifetime on hit

@@ -18,9 +18,13 @@ MonoBehaviour:
       maxChildren: 1
     childIndices: 01000000
   - gem:
-      name: Volley
+      name: Pierce
       maxChildren: 1
     childIndices: 02000000
+  - gem:
+      name: Volley
+      maxChildren: 1
+    childIndices: 03000000
   - gem:
       name: Fireball
       maxChildren: 0

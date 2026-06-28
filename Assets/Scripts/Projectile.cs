@@ -35,8 +35,8 @@ public class Projectile : MonoBehaviour
     {
         WeaponContext ctxCopy = new WeaponContext(ctx);
 
-        // if asked, disable the corresponding cloned modifier so, for example,
-        // a Volley modifier doesn't spawn copies from the cloned projectile
+        // can disable modifier so projectiles dont copy themselves infinitely
+        // set modifer.enabled to false to not add the modifier to the projectile when it initializes
         if (modifierToDisable != null)
         {
             int idx = ctx.modifiers.IndexOf(modifierToDisable);

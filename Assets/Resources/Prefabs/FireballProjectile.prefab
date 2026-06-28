@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   spd: 100
-  dmg: 2
-  maxLifeTime: 5
+  dmg: 1
+  maxLifeTime: 10
   destroyFlag: 0
   projectilePrefab: {fileID: 0}
 --- !u!50 &6714297385242186948

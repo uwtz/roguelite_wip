@@ -2,8 +2,8 @@ using UnityEngine;
 
 public abstract class Modifier
 {
-    public bool enabled = true;
-    public virtual Modifier Clone(bool enabled = true)
+    public bool enabled = true; // only add modifier to projectile if it is enabled
+    public virtual Modifier Clone(bool enabled = true) // always clone with enabled on at the moment, set enable false seperately (eg. in Projectile.cs using index)
     {
         Modifier m = CreateClone();
         m.enabled = enabled;

@@ -42,7 +42,7 @@ class PierceModifier : Modifier, IOnHit
 class VolleyModifier : Modifier, IOnFire
 {
     int count;
-    public VolleyModifier(int count = 5)
+    public VolleyModifier(int count = 6)
     {
         this.count = count;
     }

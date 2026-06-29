@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be9db3e09b9d5435aa45f865b3799080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  spd: 100
+  spd: 500
   dmg: 1
   maxLifeTime: 10
   destroyFlag: 0

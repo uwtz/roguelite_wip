@@ -8,7 +8,7 @@ public class EnemyHealth : MonoBehaviour
     private int health;
     [SerializeField] private TMP_Text healthText;
     private Animator animator;
-    private static readonly int hurtHash = Animator.StringToHash("hurt");
+    private static readonly int HurtHash = Animator.StringToHash("hurt");
 
     void Start()
     {
@@ -23,7 +23,7 @@ public class EnemyHealth : MonoBehaviour
         health -= damage;
         UpdateHealthText();
         
-        if (animator != null) animator.SetTrigger(hurtHash);
+        if (animator != null) animator.SetTrigger(HurtHash);
     }
 
     public void UpdateHealthText()

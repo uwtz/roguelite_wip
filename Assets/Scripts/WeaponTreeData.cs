@@ -15,9 +15,10 @@ public class WeaponTreeNodeData
     public int[] childIndices;
 }
 
+/*
 [System.Serializable]
 public class GemData
 {
-    public string name;
+    public GemId id;
     public int maxChildren;
-}
+}*/

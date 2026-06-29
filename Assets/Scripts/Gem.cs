@@ -1,4 +1,13 @@
 using UnityEngine;
+
+public enum GemType
+{
+    Root,
+    Fireball,
+    Pierce,
+    Volley
+}
+
 public abstract class Gem
 {
     public abstract string Name { get; }

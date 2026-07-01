@@ -4,7 +4,7 @@ using UnityEngine;
 public class WeaponTreeData : ScriptableObject
 {
     //public WeaponTreeNodeData rootWeaponTreeNodeData;// = new WeaponTreeNodeData{ gem = new GemData { name = "Root" } };
-    public WeaponTreeNodeData[] nodeDatas;
+    public WeaponTreeNodeData[] weaponTreeNodeDatas;
 }
 
 [System.Serializable]

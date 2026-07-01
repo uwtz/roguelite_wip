@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: VolleyGemData
-  m_EditorClassIdentifier: Assembly-CSharp::VolleyGemData
-  type: 3
+  m_Script: {fileID: 11500000, guid: aad63163d77ba4f2b9f9c0646e029116, type: 3}
+  m_Name: RootGemData
+  m_EditorClassIdentifier: Assembly-CSharp::RootGemData
+  type: 0
   maxChildren: 0
-  count: 0

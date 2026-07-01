@@ -7,6 +7,7 @@ public abstract class GemData : ScriptableObject
     public int maxChildren;
 }
 
+/*
 [CreateAssetMenu(fileName = "RootGemData", menuName = "Scriptable Objects/GemData/RootGemData")]
 public class RootGemData : GemData
 {
@@ -30,3 +31,4 @@ public class VolleyGemData : GemData
 {
     public int count;
 }
+*/

@@ -12,20 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f29f27feed49047abbcee5802084234f, type: 3}
   m_Name: NewWeaponTreeData
   m_EditorClassIdentifier: Assembly-CSharp::WeaponTreeData
-  nodeDatas:
-  - gem:
-      name: Root
-      maxChildren: 1
-    childIndices: 01000000
-  - gem:
-      name: Pierce
-      maxChildren: 1
-    childIndices: 02000000
-  - gem:
-      name: Volley
-      maxChildren: 1
-    childIndices: 03000000
-  - gem:
-      name: Fireball
-      maxChildren: 0
+  weaponTreeNodeDatas:
+  - gem: {fileID: 0}
+    childIndices: 
+  - gem: {fileID: 0}
     childIndices: 

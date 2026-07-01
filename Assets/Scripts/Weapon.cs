@@ -19,7 +19,7 @@ public class Weapon : MonoBehaviour
         // create weapon tree, use weaponTreeData if it exist
         // assume root node to be at index 0
         weaponTree = new WeaponTree();
-        if (weaponTreeData != null && weaponTreeData.nodeDatas.Length > 0)
+        if (weaponTreeData != null && weaponTreeData.weaponTreeNodeDatas.Length > 0)
         {
             weaponTree.root = BuildWeaponTreeNode(0);
         }
@@ -40,7 +40,7 @@ public class Weapon : MonoBehaviour
         { usedNodeDataIndices.Add(nodeDataIndex); }
 
         // node creation
-        WeaponTreeNodeData nodeData = weaponTreeData.nodeDatas[nodeDataIndex];
+        WeaponTreeNodeData nodeData = weaponTreeData.weaponTreeNodeDatas[nodeDataIndex];
         Gem gem = CreateGem(nodeData.gem);
         WeaponTreeNode node = new WeaponTreeNode { gem = gem };
 

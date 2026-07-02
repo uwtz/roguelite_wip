@@ -33,9 +33,9 @@ public abstract class ModifierGem : Gem
 public class Root : Gem
 {
     public override string Name => "Root";
-    public Root(int maxChildren = 1)
+    public Root(RootGemData rootGemData)
     {
-        this.maxChildren = maxChildren;
+        this.maxChildren = rootGemData.maxChildren;
     }
     public override void Execute(WeaponContext ctx)
     {
@@ -48,9 +48,9 @@ public class Fireball : ProjectileGem
     public override string Name => "Fireball";
     //public override GameObject projectilePrefab => Resources.Load<GameObject>("Prefabs/FireballProjectile");
     //public override int MaxChildren { get; set; }
-    public Fireball(GameObject projectilePrefab, int maxChildren = 0)
+    public Fireball(GameObject projectilePrefab, FireballGemData fireballGemData)
     {
-        this.maxChildren = maxChildren;
+        this.maxChildren = fireballGemData.maxChildren;
         this.projectilePrefab = projectilePrefab;
     }
     public override void Execute(WeaponContext ctx)
@@ -67,27 +67,31 @@ public class Fireball : ProjectileGem
 public class Pierce : ModifierGem
 {
     public override string Name => "Pierce";
+    int count;
     //public override int MaxChildren { get; set; }
     //public override Modifier modifier => new PierceModifier();
-    public Pierce(int maxChildren = 1)
+    public Pierce(PierceGemData pierceGemData)
     {
-        this.maxChildren = maxChildren;
+        this.maxChildren = pierceGemData.maxChildren;
+        this.count = pierceGemData.count;
     }
     public override void Execute(WeaponContext ctx)
     {
-        ctx.modifiers.Add(new PierceModifier());
+        ctx.modifiers.Add(new PierceModifier(count));
     }
 }
 
 public class Volley : ModifierGem
 {
     public override string Name => "Volley";
-    public Volley(int maxChildren = 1)
+    int count;
+    public Volley(VolleyGemData volleyGemData)
     {
-        this.maxChildren = maxChildren;
+        this.maxChildren = volleyGemData.maxChildren;
+        this.count = volleyGemData.count;
     }
     public override void Execute(WeaponContext ctx)
     {
-        ctx.modifiers.Add(new VolleyModifier());
+        ctx.modifiers.Add(new VolleyModifier(count));
     }
 }

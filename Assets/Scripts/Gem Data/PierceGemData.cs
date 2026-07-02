@@ -4,4 +4,8 @@ using UnityEngine;
 public class PierceGemData : GemData
 {
     public int count;
+    void OnEnable()
+    {
+        type = GemType.Pierce;
+    }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 //[CreateAssetMenu(fileName = "GemData", menuName = "Scriptable Objects/GemData/GemData")]
 public abstract class GemData : ScriptableObject
 {
-    public GemType type;
+    [HideInInspector] public GemType type;
     public int maxChildren;
 }
 

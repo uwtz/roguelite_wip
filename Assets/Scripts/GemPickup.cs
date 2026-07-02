@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class GemPickup : MonoBehaviour
 {
-    public GemDefinition gemDefinition;
+    public GemData gemData;
     //InputAction clickAction;
 
     void Start()
@@ -13,7 +13,7 @@ public class GemPickup : MonoBehaviour
 
     void OnMouseDown()
     {
-        Inventory.Instance.Add(gemDefinition);
-        Destroy(gameObject);
+        if (Inventory.Instance.Add(gemData))
+            Destroy(gameObject); // only destroy gameobject if gemdata was added to inventory successfully
     }
 }

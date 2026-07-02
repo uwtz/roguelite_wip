@@ -20,7 +20,7 @@ class SpeedModifier
 class PierceModifier : Modifier, IOnHit
 {
     int count;
-    public PierceModifier(int count = 3)
+    public PierceModifier(int count)
     {
         this.count = count;
     }
@@ -42,7 +42,7 @@ class PierceModifier : Modifier, IOnHit
 class VolleyModifier : Modifier, IOnFire
 {
     int count;
-    public VolleyModifier(int count = 6)
+    public VolleyModifier(int count)
     {
         this.count = count;
     }

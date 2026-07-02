@@ -10,7 +10,7 @@ public class WeaponTreeData : ScriptableObject
 [System.Serializable]
 public class WeaponTreeNodeData
 {
-    public GemData gem;
+    public GemData gemData;
     //public WeaponTreeNodeData[] children;
     public int[] childIndices;
 }

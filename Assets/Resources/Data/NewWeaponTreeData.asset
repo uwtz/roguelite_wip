@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: NewWeaponTreeData
   m_EditorClassIdentifier: Assembly-CSharp::WeaponTreeData
   weaponTreeNodeDatas:
-  - gem: {fileID: 0}
-    childIndices: 
-  - gem: {fileID: 0}
+  - gemData: {fileID: 11400000, guid: ce9ae2c9e57b74b598b719354fd5dfef, type: 2}
+    childIndices: 01000000
+  - gemData: {fileID: 11400000, guid: 9efa63b21d77049318e0311fe792beb2, type: 2}
+    childIndices: 02000000
+  - gemData: {fileID: 11400000, guid: 246639acf66654d73ba455b883da6f74, type: 2}
+    childIndices: 03000000
+  - gemData: {fileID: 11400000, guid: 295f2eb8ad2644c93af5b7dfa4ab2077, type: 2}
     childIndices: 

@@ -557,7 +557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb0462315d464457eb780a98ba491b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
-  gems: []
+  gemDatas: []
 --- !u!4 &444638589
 Transform:
   m_ObjectHideFlags: 0
@@ -1171,7 +1171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eec729e3fd50f4565bb60e5e72282b8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GemPickup
-  gemDefinition: {fileID: 11400000, guid: dcb409650022a4fa0bc0b4a566583e72, type: 2}
+  gemData: {fileID: 11400000, guid: 246639acf66654d73ba455b883da6f74, type: 2}
 --- !u!212 &1177495314
 SpriteRenderer:
   serializedVersion: 2
@@ -1637,8 +1637,8 @@ SceneRoots:
   - {fileID: 852132630}
   - {fileID: 1979241}
   - {fileID: 72794663}
-  - {fileID: 4970078990355371085}
   - {fileID: 320940877}
+  - {fileID: 4970078990355371085}
   - {fileID: 695407482}
   - {fileID: 134979703}
   - {fileID: 1432383698}

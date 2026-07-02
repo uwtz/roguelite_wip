@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aad63163d77ba4f2b9f9c0646e029116, type: 3}
-  m_Name: RootGemData
-  m_EditorClassIdentifier: Assembly-CSharp::RootGemData
-  maxChildren: 2
+  m_Script: {fileID: 11500000, guid: 5ba76dd1685bc471a8d320fe7b29c8b8, type: 3}
+  m_Name: PierceGemData
+  m_EditorClassIdentifier: Assembly-CSharp::PierceGemData
+  maxChildren: 1
+  count: 1

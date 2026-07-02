@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// obsolete
 [CreateAssetMenu(fileName = "GemDefinition", menuName = "Scriptable Objects/GemDefinition")]
 public class GemDefinition : ScriptableObject
 {

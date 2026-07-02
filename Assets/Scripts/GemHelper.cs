@@ -18,8 +18,8 @@ public class GemHelper : MonoBehaviour
 
     [SerializeField] GameObject FireballPrefab;
 
-    public Gem CreateFireball(int maxChildren = 0)
+    public Gem CreateFireball(FireballGemData fireballGemData)
     {
-        return new Fireball(FireballPrefab, maxChildren);
+        return new Fireball(FireballPrefab, fireballGemData);
     }
 }

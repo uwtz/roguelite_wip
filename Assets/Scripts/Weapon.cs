@@ -41,11 +41,14 @@ public class Weapon : MonoBehaviour
 
         // node creation
         WeaponTreeNodeData nodeData = weaponTreeData.weaponTreeNodeDatas[nodeDataIndex];
-        Gem gem = CreateGem(nodeData.gem);
-        WeaponTreeNode node = new WeaponTreeNode { gem = gem };
-
+        Gem gem = CreateGem(nodeData.gemData);
+        WeaponTreeNode node = new()
+        {
+            gem = gem,
+            children = new WeaponTreeNode[nodeData.childIndices.Length]
+        };
+        
         // children recursion
-        node.children =  new WeaponTreeNode[nodeData.childIndices.Length];
         for (int i=0; i<nodeData.childIndices.Length; i++)
         {
             node.children[i] = BuildWeaponTreeNode(nodeData.childIndices[i]);
@@ -58,12 +61,12 @@ public class Weapon : MonoBehaviour
     {
         // TODO: use enum instead of string?
         Gem gem = null;
-        switch(gemData.name)
+        switch(gemData.type)
         {
-            case "Root" : gem = new Root(); break;
-            case "Fireball": gem = GemHelper.Instance.CreateFireball(); break;
-            case "Volley": gem = new Volley(); break;
-            case "Pierce": gem = new Pierce(); break;
+            case GemType.Root: gem = new Root((RootGemData)gemData); break;
+            case GemType.Fireball: gem = GemHelper.Instance.CreateFireball((FireballGemData)gemData); break;
+            case GemType.Volley: gem = new Volley((VolleyGemData)gemData); break;
+            case GemType.Pierce: gem = new Pierce((PierceGemData)gemData); break;
             default: Debug.Log($"Failed to create gem: {name}"); break;
         }
         gem.maxChildren = gemData.maxChildren;

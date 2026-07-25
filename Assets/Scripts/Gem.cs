@@ -5,7 +5,8 @@ public enum GemType
     Root,
     Fireball,
     Pierce,
-    Volley
+    Volley,
+    Bounce
 }
 
 public abstract class Gem
@@ -33,9 +34,10 @@ public abstract class ModifierGem : Gem
 public class Root : Gem
 {
     public override string Name => "Root";
+    RootGemData rootGemData;
     public Root(RootGemData rootGemData)
     {
-        this.maxChildren = rootGemData.maxChildren;
+        this.rootGemData = rootGemData;
     }
     public override void Execute(WeaponContext ctx)
     {
@@ -46,11 +48,12 @@ public class Root : Gem
 public class Fireball : ProjectileGem
 {
     public override string Name => "Fireball";
+    FireballGemData fireballGemData;
     //public override GameObject projectilePrefab => Resources.Load<GameObject>("Prefabs/FireballProjectile");
     //public override int MaxChildren { get; set; }
     public Fireball(GameObject projectilePrefab, FireballGemData fireballGemData)
     {
-        this.maxChildren = fireballGemData.maxChildren;
+        this.fireballGemData = fireballGemData;
         this.projectilePrefab = projectilePrefab;
     }
     public override void Execute(WeaponContext ctx)
@@ -67,31 +70,44 @@ public class Fireball : ProjectileGem
 public class Pierce : ModifierGem
 {
     public override string Name => "Pierce";
-    int count;
+    PierceGemData pierceGemData;
+    //int count;
     //public override int MaxChildren { get; set; }
     //public override Modifier modifier => new PierceModifier();
     public Pierce(PierceGemData pierceGemData)
     {
-        this.maxChildren = pierceGemData.maxChildren;
-        this.count = pierceGemData.count;
+        this.pierceGemData = pierceGemData;
     }
     public override void Execute(WeaponContext ctx)
     {
-        ctx.modifiers.Add(new PierceModifier(count));
+        ctx.modifiers.Add(new PierceModifier(pierceGemData));
     }
 }
 
 public class Volley : ModifierGem
 {
     public override string Name => "Volley";
-    int count;
+    VolleyGemData volleyGemData;
     public Volley(VolleyGemData volleyGemData)
     {
-        this.maxChildren = volleyGemData.maxChildren;
-        this.count = volleyGemData.count;
+        this.volleyGemData = volleyGemData;
     }
     public override void Execute(WeaponContext ctx)
     {
-        ctx.modifiers.Add(new VolleyModifier(count));
+        ctx.modifiers.Add(new VolleyModifier(volleyGemData));
+    }
+}
+
+public class Bounce : ModifierGem
+{
+    public override string Name => "Bounce";
+    BounceGemData bounceGemData;
+    public Bounce(BounceGemData bounceGemData)
+    {
+        this.bounceGemData = bounceGemData;
+    }
+    public override void Execute(WeaponContext ctx)
+    {
+        ctx.modifiers.Add(new BounceModifier(bounceGemData));
     }
 }

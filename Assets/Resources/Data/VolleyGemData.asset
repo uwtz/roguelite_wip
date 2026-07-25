@@ -12,5 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91dd0891832be4f37b56b08bb36c93b6, type: 3}
   m_Name: VolleyGemData
   m_EditorClassIdentifier: Assembly-CSharp::VolleyGemData
+  sprite: {fileID: 21300000, guid: 22e9dd5a04b9c4f63a5558570840dcd3, type: 3}
+  width: 3
+  height: 3
+  type: 3
   maxChildren: 1
   count: 2
+  spread: 30

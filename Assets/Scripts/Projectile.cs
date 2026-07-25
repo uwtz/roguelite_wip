@@ -60,9 +60,19 @@ public class Projectile : MonoBehaviour
         // TODO: set rotation using dir in update
     }
 
-    public void AddDirectionOffset(float offset)
+    public void AddDirectionOffset(float offset) //deg
     {
-        dir = Quaternion.Euler(0, 0, offset) * dir;
+        SetDirection(Quaternion.Euler(0, 0, offset) * dir);
+    }
+
+    public void SetDirection(Vector2 dir)
+    {
+        this.dir = dir;
+    }
+
+    public Vector2 GetDirection()
+    {
+        return dir;
     }
 
     // TODO: collision

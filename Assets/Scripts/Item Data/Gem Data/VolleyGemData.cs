@@ -4,6 +4,7 @@ using UnityEngine;
 public class VolleyGemData : GemData
 {
     public int count;
+    public int spread;
     void OnEnable()
     {
         type = GemType.Volley;

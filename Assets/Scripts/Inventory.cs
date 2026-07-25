@@ -1,27 +1,35 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public static Inventory Instance;
-    public List<GemData> gemDatas = new();
+    public int width = 9;
+    public int height = 15;
+    public InventoryGrid inventoryGrid;
+    public Action OnInventoryChanged;
 
-    void Awake()
+    protected virtual void Awake()
     {
-        if (Instance != null && Instance != this)
-        { Destroy(gameObject); return; }
-        Instance = this;
+        inventoryGrid = new InventoryGrid(width, height);
     }
 
     // return true if gemData was added to inventory successfully
-    public bool Add(GemData gemData)
+    public bool TryAddItemData(ItemData itemData)
     {
-        // TODO: check if inventory is full. if so dont add to inv and ret false
-        if (gemData != null)
+        if (!inventoryGrid.TryFindFreeSpot(itemData, out int x, out int y))
         {
-            gemDatas.Add(gemData);
-            return true;
+            return false;
         }
+
+        inventoryGrid.Place(itemData, x, y);
+        OnInventoryChanged?.Invoke();
+        return true;
+    }
+
+    public bool TryAddItemData(ItemData itemData, int x, int y)
+    {
+        Debug.Log("not implemented");
         return false;
     }
 }

@@ -4,7 +4,7 @@ public interface IOnFire
 {void OnFire(Projectile proj);}
 
 public interface IOnHit
-{void OnHit(Projectile proj, GameObject target);}
+{void OnHit(Projectile proj, GameObject hitObject);}
 
 public interface IOnTick
 {void OnTick(Projectile proj);}

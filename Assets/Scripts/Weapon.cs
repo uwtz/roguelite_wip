@@ -63,10 +63,12 @@ public class Weapon : MonoBehaviour
         Gem gem = null;
         switch(gemData.type)
         {
+            // TODO: can maybe have the gem constructors check if gemData is the right type instead of casting it to the respective type.
             case GemType.Root: gem = new Root((RootGemData)gemData); break;
             case GemType.Fireball: gem = GemHelper.Instance.CreateFireball((FireballGemData)gemData); break;
             case GemType.Volley: gem = new Volley((VolleyGemData)gemData); break;
             case GemType.Pierce: gem = new Pierce((PierceGemData)gemData); break;
+            case GemType.Bounce: gem = new Bounce((BounceGemData)gemData); break;
             default: Debug.Log($"Failed to create gem: {name}"); break;
         }
         gem.maxChildren = gemData.maxChildren;
@@ -76,7 +78,7 @@ public class Weapon : MonoBehaviour
 
     public void Cast(Vector2 origin, Vector2 dir)
     {
-        Debug.Log($"Casting {gameObject.name}\nOrigin: {origin}, Direction: {dir}");
+        //Debug.Log($"Casting {gameObject.name}\nOrigin: {origin}, Direction: {dir}");
         //Debug.Log(weaponTree.ToString());
         WeaponContext ctx = new WeaponContext(origin, dir);
         if (weaponTree.root != null)

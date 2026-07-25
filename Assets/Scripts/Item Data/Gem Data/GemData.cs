@@ -1,9 +1,10 @@
 using UnityEngine;
 
 //[CreateAssetMenu(fileName = "GemData", menuName = "Scriptable Objects/GemData/GemData")]
-public abstract class GemData : ScriptableObject
+public abstract class GemData : ItemData
 {
     [HideInInspector] public GemType type;
+    [Header("Gem Data")]
     public int maxChildren;
 }
 

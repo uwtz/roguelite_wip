@@ -1,10 +1,19 @@
+using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * a 2d grid that stores ItemDatas
+ * each ItemData takes up an W x H space on the grid
+ * each ItemData is stored in a PlacedItem instance
+ *
+ * PlacedItem: stores a ItemData and the top left position of the item in the grid
+ */
 public class InventoryGrid
 {
     public int width;
     public int height;
     private readonly PlacedItem[,] grid;
+    private List<PlacedItem> placedItems;
 
     public InventoryGrid(int width, int height)
     {
@@ -47,6 +56,8 @@ public class InventoryGrid
             for (int j=y; j<y+h; j++)
                 grid[i, j] = placedItem;
 
+        placedItems.Add(placedItem);
+
         return placedItem;
     }
 
@@ -58,6 +69,8 @@ public class InventoryGrid
 
         // might need to parse through all cell and check if item matches
         // this way an item already removed can be used to call Remove() and remove something else instead
+
+        placedItems.Remove(placedItem);
     }
 
     public bool TryFindFreeSpot(ItemData itemData, out int foundX, out int foundY)

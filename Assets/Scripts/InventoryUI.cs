@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class InventoryUI : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
+    [SerializeField] private GameObject cellsParent;
     [SerializeField] private GameObject cellPrefab;
     private Image[,] gridUI;
 
@@ -18,7 +19,7 @@ public class InventoryUI : MonoBehaviour
         for (int y=0; y<inventory.height; y++)
             for (int x=0; x<inventory.width; x++)
             {
-                GameObject cell = Instantiate(cellPrefab, transform);
+                GameObject cell = Instantiate(cellPrefab, cellsParent.transform);
                 cell.name = $"{cellPrefab.name} ({x}, {y})";
                 gridUI[x,y] = cell.GetComponent<Image>();
             }
@@ -34,7 +35,7 @@ public class InventoryUI : MonoBehaviour
                 PlacedItem placedItem = inventory.inventoryGrid.GetItem(x,y);
                 gridUI[x,y].sprite = placedItem?.itemData.sprite;
 
-                if (placedItem.x == x && placedItem.y == y)
+                if (placedItem != null && placedItem.x == x && placedItem.y == y)
                     CreateItemUI(placedItem);
             }
     }

@@ -12,14 +12,14 @@ public class InventoryItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        
+        Debug.Log("begin drag");
     }
     public void OnDrag(PointerEventData eventData)
     {
-        
+        Debug.Log("drag");
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        
+        Debug.Log("end drag");
     }
 }
